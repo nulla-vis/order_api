@@ -24,6 +24,9 @@ app.use(express.urlencoded({extended: true}))
 app.get("/wkwk", (req, res) => {
     res.json({"message": "Application is running!"})
 })
+app.get("/", (req, res) => {
+    res.status(200).json({"message": "Application is running!"})
+})
 
 require("./app/routes/order.routes")(app)
 

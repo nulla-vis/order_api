@@ -22,7 +22,7 @@ app.use(express.urlencoded({extended: true}))
 
 // simple route
 app.get("/wkwk", (req, res) => {
-    res.json({"message": "Application is running!"})
+    res.json({"message": "Aplikasi jalan! wkwkw!"})
 })
 app.get("/", (req, res) => {
     res.status(200).json({"message": "Application is running!"})

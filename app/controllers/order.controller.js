@@ -67,6 +67,20 @@ exports.deleteAllOrders = (res, req) => {
 
 }
 
+// Find all incoming orders (status = 0)
+exports.getAllIncoming = (res, req) => {
+    Order.findAll({where: {status: 0}})
+    .then(data=>{
+        res.send(data)
+    })
+    .catch(err => {
+        res.status(500).send({
+            message: err.message || "Some error occurred while retrieving order's data."
+        })
+    })
+}
+
+
 // Find All unpayed orders
 exports.getAllUnpayed = (req, res) => {
 

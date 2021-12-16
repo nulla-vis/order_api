@@ -68,8 +68,8 @@ exports.deleteAllOrders = (req, res) => {
 }
 
 // Find all incoming orders (status = 0)
-exports.getAllIncoming = (req, res) => {
-    Order.findAll({ where: { status: 0 } })
+exports.getAllIncoming = async (req, res) => {
+    await Order.findAll({ where: { status: 0 } })
     .then(data => {
       res.send(data);
     })

@@ -7,5 +7,8 @@ module.exports = app => {
     // Create new order
     router.post("/create", orders.createOrder)
 
+    // Retrieve all incoming orders
+    router.get("/incoming", orders.getAllIncoming);
+
     app.use('/api/orders', router)
 }

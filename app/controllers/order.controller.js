@@ -69,16 +69,43 @@ exports.deleteAllOrders = (req, res) => {
 
 // Find all incoming orders (status = 0)
 exports.getAllIncoming = async (req, res) => {
-    await Order.findAll({ where: { status: 0 } })
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving tutorials."
-      });
-    });
+    // let array = []
+    // Order.findAll({ where: { status: 0 } })
+    // .then(data => {
+    //     data.forEach( cart_order => {
+    //         OrderDetail.findAll({where: {order_id: cart_order.id}})
+    //         .then(data => {
+    //             array.push
+    //             console.log("All users:", JSON.stringify(data, null, 2));
+    //         })
+    //     });
+        
+    // })
+    // .catch(err => {
+    //   res.status(500).send({
+    //     message:
+    //       err.message || "Some error occurred while retrieving tutorials."
+    //   });
+    // });
+
+    try {
+        const incoming_order = await Order.findAll({ where: { status: 0 } })
+
+        let incoming_order_id = []
+        incoming_order.forEach(single_order => {
+            console.log('1==========================')
+            incoming_order_id.push(single_order.dataValues.id)
+        })
+        console.log(incoming_order_id)
+        const cart_detail = await OrderDetail.findAll({ 
+            where: {
+            order_id: incoming_order_id // Same as using `id: { [Op.in]: [1,2,3] }`
+        }})
+        console.log('2==========================')
+        res.send(cart_detail)
+    } catch (error) {
+        res.send({"error_message": error})
+    }
 }
 
 

@@ -58,26 +58,27 @@ exports.updateOrder = (req, res) => {
 }
 
 // Delete an order with specific id
-exports.deleteOrder = (res, req) => {
+exports.deleteOrder = (req, res) => {
 
 }
 
 // Delete all orders from database
-exports.deleteAllOrders = (res, req) => {
+exports.deleteAllOrders = (req, res) => {
 
 }
 
 // Find all incoming orders (status = 0)
-exports.getAllIncoming = (res, req) => {
-    Order.findAll({where: {status: 0}})
-    .then(data=>{
-        res.send(data)
+exports.getAllIncoming = (req, res) => {
+    Order.findAll({ where: { status: 0 } })
+    .then(data => {
+      res.send(data);
     })
     .catch(err => {
-        res.status(500).send({
-            message: err.message || "Some error occurred while retrieving order's data."
-        })
-    })
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving tutorials."
+      });
+    });
 }
 
 

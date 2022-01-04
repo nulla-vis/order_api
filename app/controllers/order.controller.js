@@ -29,6 +29,7 @@ exports.createOrder = async (req, res) => {
                 "order_id":order.id,
                 "menu_id": menu.id,
                 "amount": menu.amount,
+                "status": 0,
                 "table_number": menu.table_number
             })
         })

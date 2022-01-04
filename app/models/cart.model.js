@@ -8,8 +8,11 @@ module.exports = (sequelize, Sequelize) => {
       },
       amount: {
         type: Sequelize.INTEGER
-      }
-      ,table_number: {
+      },
+      status: {
+        type: Sequelize.INTEGER
+      },
+      table_number: {
         type: Sequelize.INTEGER
       }
     });

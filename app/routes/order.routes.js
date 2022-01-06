@@ -14,5 +14,8 @@ module.exports = app => {
     // update an order status
     router.put("/:id", cart_order.updateCart)
 
+    // Retrieve all finished/cancelled order
+    router.get("/all_finished", cart_order.gettAllFinished)
+
     app.use('/api/orders', router)
 }

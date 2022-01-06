@@ -60,7 +60,7 @@ const checkCartComplete = async (cart_id) => {
     }
   })
   
-  if(allCartByOrderId.some(item => item.status >= 2)) {
+  if(!allCartByOrderId.some(item => item.status <= 2)) {
     updateOrderToComplete(order_id)
   }
 }

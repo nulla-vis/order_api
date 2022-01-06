@@ -1,7 +1,7 @@
 const db = require("../models")
 const Order = db.orders
 const OrderDetail = db.carts
-const op = db.Sequelize.op
+const { Op } = require("sequelize");
 
 // Create and save a new Order
 exports.createOrder = async (req, res) => {
@@ -81,7 +81,11 @@ exports.deleteAllOrders = (req, res) => {
 // Find all incoming orders (status = 0)
 exports.getAllIncoming = async (req, res) => {
     try {
-        const incoming_order = await Order.findAll({ where: { status: 0 } })
+        const incoming_order = await Order.findAll({ where: { 
+            status: {
+                [Op.lte] : 1
+            }
+        } })
 
         let incoming_order_id = []
         incoming_order.forEach(single_order => {

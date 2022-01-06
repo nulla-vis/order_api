@@ -8,6 +8,9 @@ module.exports = app => {
     // Create new order
     router.post("/create", orders.createOrder)
 
+    // Retrieve All Orders
+    router.get("/allOrders", orders.getAllOrders)
+
     // Retrieve all incoming orders
     router.get("/incoming", orders.getAllIncoming);
 

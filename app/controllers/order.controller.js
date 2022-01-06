@@ -47,6 +47,14 @@ exports.createOrder = async (req, res) => {
 
 // Retrieve All order from database
 exports.getAllOrders = (req, res) => {
+    Order.findAll().then(data => {
+        res.send(data)
+    }).catch(err => {
+        res.status(500).send({
+          message: err.message || "Some error occurred while retrieving all Ordes data"
+        })
+    })
+
 
 }
 

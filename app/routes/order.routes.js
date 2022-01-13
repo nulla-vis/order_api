@@ -1,4 +1,5 @@
 const { Router } = require("express")
+const { route } = require("express/lib/router")
 
 module.exports = app => {
     const orders = require("../controllers/order.controller.js")
@@ -19,6 +20,9 @@ module.exports = app => {
 
     // Retrieve all finished/cancelled order
     router.get("/all_finished", cart_order.gettAllFinished)
+
+    // Delete a cart with specific id
+    router.delete("/:id", cart_order.deleteCart)
 
     app.use('/api/orders', router)
 }

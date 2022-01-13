@@ -7,7 +7,7 @@ const { Op } = require("sequelize");
 // update a cart order
 exports.updateCart = (req, res) => {
     const id = req.params.id;
-
+    
     OrderDetail.update(req.body, {
         where: { id: id }
       })
@@ -50,14 +50,17 @@ exports.gettAllFinished = (req, res) => {
 }
 
 // Delete an with specific id
-exports.deleteCart = (req, res) => {
+exports.deleteCart = async (req, res) => {
   const id = req.params.id
-
+  const cartDetail = await OrderDetail.findByPk(id)
+  
+  
   OrderDetail.destroy({
     where: {id: id}
   })
   .then(num => {
     if (num == 1) {
+      checkOrderEmpty(cartDetail.order_id)
       res.send({
         message: "Cart was deleted successfully!"
       });
@@ -72,6 +75,7 @@ exports.deleteCart = (req, res) => {
       message: "Could not delete Cart with id=" + id
     });
   });
+  
 }
 
 // check if the order has been completed
@@ -88,6 +92,19 @@ const checkCartComplete = async (cart_id) => {
   if(allCartByOrderId.every(item => item.status >= 2)) {
     updateOrderToComplete(order_id)
   }
+}
+
+// check if order's cart is empty
+const checkOrderEmpty = async (order_id) => {
+  const order = await OrderDetail.findAll({
+    where: {order_id: order_id}
+  })
+
+
+  if(order.length == 0) {
+    deleteOrder(order_id)
+  }
+
 }
 
 // update order status to 1 (all)
@@ -114,3 +131,20 @@ const updateOrderToComplete = (order_id) => {
   
 }
 
+// delete order when cart is empty from deleting cart
+
+const deleteOrder = (order_id) => {
+  Order.destroy({
+    where: {id: order_id}
+  })
+  .then(num => {
+    if (num == 1) {
+      console.log("Order was deleted successfully!")
+    } else {
+      console.log(`Cannot delete Cart with id=${order_id}. Maybe Cart was not found!`)
+    }
+  })
+  .catch(err => {
+    console.log("Could not order Cart with id=" + order_id)
+  });
+}

@@ -68,11 +68,6 @@ exports.updateOrder = (req, res) => {
 
 }
 
-// Delete an order with specific id
-exports.deleteOrder = (req, res) => {
-
-}
-
 // Delete all orders from database
 exports.deleteAllOrders = (req, res) => {
 

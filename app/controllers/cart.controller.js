@@ -49,6 +49,31 @@ exports.gettAllFinished = (req, res) => {
 
 }
 
+// Delete an with specific id
+exports.deleteCart = (req, res) => {
+  const id = req.params.id
+
+  OrderDetail.destroy({
+    where: {id: id}
+  })
+  .then(num => {
+    if (num == 1) {
+      res.send({
+        message: "Cart was deleted successfully!"
+      });
+    } else {
+      res.send({
+        message: `Cannot delete Cart with id=${id}. Maybe Cart was not found!`
+      });
+    }
+  })
+  .catch(err => {
+    res.status(500).send({
+      message: "Could not delete Cart with id=" + id
+    });
+  });
+}
+
 // check if the order has been completed
 const checkCartComplete = async (cart_id) => {
   const cartDetail = await OrderDetail.findByPk(cart_id)
@@ -88,3 +113,4 @@ const updateOrderToComplete = (order_id) => {
     });
   
 }
+
